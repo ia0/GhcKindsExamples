@@ -10,10 +10,10 @@
 
 module H.List.Prelude where
 
-import Prelude hiding ( Eq, map )
+import Prelude hiding ( Eq, map, length )
 
--- import S.Bool ( Rep(..) )
--- import qualified S.Bool as B
+import S.Bool ( Rep(..) )
+import qualified S.Bool as B
 import S.Nat ( Nat(..), Rep(..) )
 import qualified S.Nat as N
 
@@ -29,6 +29,22 @@ head (HCons x _xs) = x
 
 tail :: HList (Cons a as) -> HList as
 tail (HCons _x xs) = xs
+
+type family Null (as :: List *) :: Bool
+type instance Null Nil = True
+type instance Null (Cons a as) = False
+
+null :: HList as -> B.Rep (Null as)
+null HNil = STrue
+null (HCons {}) = SFalse
+
+type family Length (as :: List *) :: Nat
+type instance Length Nil = Zero
+type instance Length (Cons a as) = Succ (Length as)
+
+length :: HList as -> N.Rep (Length as)
+length HNil = SZero
+length (HCons _ xs) = SSucc (length xs)
 
 type family Append (as :: List *) (bs :: List *) :: List *
 type instance Append Nil bs = bs
