@@ -1,11 +1,11 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE GADTs #-}
 
-module SNat where
+module S.Nat where
 
 import Prelude hiding ( Eq )
 
-import qualified SBool as B
+import qualified S.Bool as B
 
 data Nat = Zero | Succ Nat
 

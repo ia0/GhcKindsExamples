@@ -1,7 +1,7 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE GADTs #-}
 
-module SBool where
+module S.Bool where
 
 -- IA0: this should be generated with %False and %True
 data Rep :: Bool -> * where
