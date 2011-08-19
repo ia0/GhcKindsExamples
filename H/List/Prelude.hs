@@ -3,9 +3,13 @@
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE UndecidableInstances #-}
 
-{- This is a translation of parts of the HList package.
- -   http://hackage.haskell.org/package/HList
- -   2004  Oleg Kiselyov, Ralf Laemmel, Keean Schupke
+{- August 2011
+
+This file is a translation of parts of the HList package version
+0.2.3 (2004 - Oleg Kiselyov, Ralf Laemmel, Keean Schupke).
+
+It is available on hackage http://hackage.haskell.org/package/HList.
+
  -}
 
 module H.List.Prelude where
