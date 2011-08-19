@@ -5,10 +5,10 @@
 
 {- August 2011
 
-This file is a translation of parts of the HList package version
-0.2.3 (2004 - Oleg Kiselyov, Ralf Laemmel, Keean Schupke).
+This file translates parts of HList 0.2.3 (2004 - Oleg Kiselyov, Ralf
+Laemmel, Keean Schupke).
 
-It is available on hackage http://hackage.haskell.org/package/HList.
+http://hackage.haskell.org/package/HList
 
  -}
 
