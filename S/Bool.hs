@@ -36,7 +36,8 @@ not :: Rep b -> Rep (Not b)
 not STrue  = SFalse
 not SFalse = STrue
 
--- IA0: type family If (b :: Bool) (true :: k) (false :: k) :: k
--- IA0: type instance If True  true _     = true
--- IA0: type instance If False _    false = false
+-- IA0: make this kind polymorphic
+type family If (cond :: Bool) (true :: *) (false :: *) :: *
+type instance If True  true false = true
+type instance If False true false = false
 

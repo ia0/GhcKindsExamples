@@ -8,6 +8,7 @@ import Prelude hiding ( Eq )
 import qualified S.Bool as B
 
 data Nat = Zero | Succ Nat
+  deriving( Show )
 
 -- IA0: this should be generated with %Zero and %Succ
 data Rep :: Nat -> * where
