@@ -12,7 +12,7 @@ http://hackage.haskell.org/package/HList
 
  -}
 
-module H.List.Prelude where
+module H.List where
 
 import Prelude hiding ( Eq, map, length )
 
