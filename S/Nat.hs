@@ -1,9 +1,10 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE GADTs #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module S.Nat where
 
-import Prelude hiding ( Eq )
+import Prelude hiding( Eq )
 
 import qualified S.Bool as B
 
@@ -15,9 +16,12 @@ data Rep :: Nat -> * where
   SZero :: Rep Zero
   SSucc :: Rep n -> Rep (Succ n)
 
-fromS :: Rep n -> Nat
-fromS SZero = Zero
-fromS (SSucc n) = Succ (fromS n)
+fromRep :: Rep n -> Nat
+fromRep SZero = Zero
+fromRep (SSucc n) = Succ (fromRep n)
+
+instance Show (Rep n) where
+  show = show . fromRep
 
 pred :: Rep (Succ n) -> Rep n
 pred (SSucc n) = n
@@ -38,6 +42,12 @@ eq (SSucc  m) (SSucc  n) = eq m n
 -- IA0: eq _ _ = SFalse
 eq (SSucc _m)  SZero     = B.SFalse
 eq  SZero     (SSucc _n) = B.SFalse
+
+type family Neq (m :: Nat) (n :: Nat) :: Bool
+type instance Neq m n = B.Not (Eq m n)
+
+neq :: Rep m -> Rep n -> B.Rep (Neq m n)
+neq m n = B.not (eq m n)
 
 type family Plus (m :: Nat) (n :: Nat) :: Nat
 type instance Plus Zero n = n

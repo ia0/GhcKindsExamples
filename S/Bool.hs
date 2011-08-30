@@ -8,9 +8,9 @@ data Rep :: Bool -> * where
   SFalse :: Rep False
   STrue  :: Rep True
 
-fromS :: Rep b -> Bool
-fromS SFalse = False
-fromS STrue  = True
+fromRep :: Rep b -> Bool
+fromRep SFalse = False
+fromRep STrue  = True
 
 type family And (b1 :: Bool) (b2 :: Bool) :: Bool
 type instance And False b = False
