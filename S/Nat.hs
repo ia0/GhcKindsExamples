@@ -20,6 +20,13 @@ fromRep :: Rep n -> Nat
 fromRep SZero = Zero
 fromRep (SSucc n) = Succ (fromRep n)
 
+class ToRep n where
+  toRep :: Rep n
+instance ToRep Zero where
+  toRep = SZero
+instance (ToRep n) => ToRep (Succ n) where
+  toRep = SSucc toRep
+
 instance Show (Rep n) where
   show = show . fromRep
 

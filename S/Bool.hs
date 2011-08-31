@@ -12,6 +12,16 @@ fromRep :: Rep b -> Bool
 fromRep SFalse = False
 fromRep STrue  = True
 
+class ToRep b where
+  toRep :: Rep b
+instance ToRep True where
+  toRep = STrue
+instance ToRep False where
+  toRep = SFalse
+
+instance Show (Rep b) where
+  show = show . fromRep
+
 type family And (b1 :: Bool) (b2 :: Bool) :: Bool
 type instance And False b = False
 type instance And True  b = b
