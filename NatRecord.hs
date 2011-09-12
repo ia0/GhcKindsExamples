@@ -10,6 +10,7 @@
 module NatRecord where
 
 import Prelude hiding( lookup )
+import GHC.Prim( Constraint )
 
 import qualified S.Bool as B
 import S.Nat( Nat(..) )
