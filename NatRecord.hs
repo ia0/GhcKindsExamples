@@ -31,7 +31,7 @@ instance Show (Record Show a) where
        go s (RCons n a r) = concat [s," ",show n," = ",show a,"\n"]
                             ++ go "," r
 
--- IA0: It is too hard to do validity checking.
+-- IA0: It is too hard to do disjointedness checking.
 -- We cannot show b2 when b1 `And` b2 ~ True
 
 type family Lookup (n :: Nat) (r :: [(Nat, *)]) :: *

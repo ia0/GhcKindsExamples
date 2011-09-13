@@ -3,7 +3,7 @@
 
 module Vector where
 
-import Prelude ( id, (.) )
+import Prelude ( id, (.), otherwise, Bool(..) )
 
 import S.Nat ( Nat(..), Rep(..) )
 import qualified S.Nat as N
@@ -34,9 +34,17 @@ toList :: Vector a n -> [a]
 toList VNil = []
 toList (VCons x xs) = x : toList xs
 
-splitAt :: N.Rep m -> Vector a (N.Plus m n) -> (Vector a m, Vector a n)
-splitAt SZero zs = (VNil, zs)
-splitAt (SSucc m) (VCons x zs) = (VCons x xs, ys)
-  where (xs, ys) = splitAt m zs
+-- splitAt :: N.Rep m -> Vector a (N.Plus m n) -> (Vector a m, Vector a n)
+-- splitAt SZero zs = (VNil, zs)
+-- splitAt (SSucc m) (VCons x zs) = (VCons x xs, ys)
+--   where (xs, ys) = splitAt m zs
 -- IA0: splitAt (SSucc m) VNil = undefined  -- IA0: Pattern match(es) are non-exhaustive
+
+-- IA0: What to do with filter's result type?
+-- filter :: (a -> Bool) -> Vector a n -> Vector a m
+-- filter p VNil = VNil
+-- filter p (VCons x xs)
+--   | p x = VCons x xs'
+--   | otherwise = xs'
+--   where xs' = filter p xs
 
