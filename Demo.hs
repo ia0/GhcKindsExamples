@@ -1,9 +1,12 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FunctionalDependencies #-}
 
-module Tutorial where
+module Demo where
 
 import Prelude( error )
 
@@ -12,7 +15,7 @@ import Prelude( error )
 -- head :: List a -> a
 -- head (Cons x _) = x
 
-data Maybe a = Nothing | Just a
+-- data Maybe a = Nothing | Just a
 
 -- head :: List a -> Maybe a
 -- head (Cons x _) = Just x
@@ -22,11 +25,11 @@ data Maybe a = Nothing | Just a
 -- head (Cons x _) = x
 -- head Nil = error "head: Nil"
 
-data Emptiness = Empty | NotEmpty
+-- data Emptiness = Empty | NotEmpty
 
-data List a e where
-  Nil :: List a Empty
-  Cons :: a -> List a e -> List a NotEmpty
+-- data List a e where
+--   Nil :: List a Empty
+--   Cons :: a -> List a e -> List a NotEmpty
 
 -- head :: List a NotEmpty -> a
 -- head (Cons x _) = x
@@ -35,53 +38,39 @@ data List a e where
 -- head_maybe (Cons x _) = Just x
 -- head_maybe Nil = Nothing
 
-data HMaybe m where
-  HNothing :: HMaybe Nothing
-  HJust :: a -> HMaybe (Just a)
+-- data EList a where  -- exists e. List a e
+--   EList :: List a e -> EList a  -- Pack
 
-type family IfEmpty (e :: Emptiness) a :: Maybe *
-type instance IfEmpty NotEmpty a = Just a
-type instance IfEmpty Empty a = Nothing
+-- class Exist f e where
+--   -- Exist ::           (* -> *) -> * -> Constraint
+--   -- Exist :: forall k. (k -> *) -> * -> Constraint
+--   pack :: f x -> e
+--   unpack :: e -> (forall x. f x -> a) -> a
 
-head_maybe :: List a e -> HMaybe (IfEmpty e a)
-head_maybe (Cons x _) = HJust x
-head_maybe Nil = HNothing
+-- instance Exist (List a) (EList a) where
+--   -- Exist Emptiness (List a) (EList a)
+--   pack = EList
+--   unpack (EList x) f = f x
 
--- data SMaybe s m where
---   SNothing :: SMaybe s Nothing
---   SJust :: s a -> SMaybe s (Just a)
+-- tail :: List a NotEmpty -> EList a
+-- tail (Cons _ xs) = EList xs
 
--- E<Type> means exists a. <Type> a
-
-data EList a where
-  EList :: List a e -> EList a
-
-tail :: List a NotEmpty -> EList a
-tail (Cons _ xs) = EList xs
+----------------------------------------------------------------------
 
 -- data Nat = Zero | Succ Nat
 
--- S<Type> is the singleton type predicate for <Type>
--- S<Type> <term> is the singleton type for <term>
-
--- data SNat n where
+-- data SNat n where  -- singleton types for Nat
 --   SZero :: SNat Zero
 --   SSucc :: SNat n -> SNat (Succ n)
 
 -- data ENat where
 --   ENat :: SNat n -> ENat
 
--- l<Type> means lower
--- l<Type> :: S<Type> <term> -> <Type>
-
--- r<Type> means raise
--- r<Type> :: <Type> -> exists (x :: <Type>). S<Type> x
-
--- lNat :: SNat n -> Nat
+-- lNat :: SNat n -> Nat  -- lower
 -- lNat SZero = Zero
 -- lNat (SSucc sn) = Succ (lNat sn)
 
--- rNat :: Nat -> ENat
+-- rNat :: Nat -> ENat  -- raise
 -- rNat Zero = ENat SZero
 -- rNat (Succ n) =
 --   case rNat n of { ENat sn ->

@@ -82,7 +82,7 @@ type instance Project (n ': ns) r = '(n, Lookup n r) ': Project ns r
 class ZeroConstraint (a :: *)
 instance ZeroConstraint a
 
--- -- TESTS -------------------------------------------------------------
+-- TESTS -------------------------------------------------------------
 
 type LName = Zero
 lName :: N.Rep LName
