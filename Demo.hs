@@ -12,32 +12,52 @@ import Prelude( error )
 -- head :: List a -> a
 -- head (Cons x _) = x
 
+data Maybe a = Nothing | Just a
+
+-- head :: List a -> Maybe a
+-- head (Cons x _) = Just x
+-- head Nil = Nothing
+
 -- head :: List a -> a
 -- head (Cons x _) = x
 -- head Nil = error "head: Nil"
 
--- data Emptiness = Empty | NotEmpty
+data Emptiness = Empty | NotEmpty
 
--- data List a e where
---   Nil :: List a Empty
---   Cons :: a -> List a e -> List a NotEmpty
-
--- List :: * -> Emptiness -> *
+data List a e where
+  Nil :: List a Empty
+  Cons :: a -> List a e -> List a NotEmpty
 
 -- head :: List a NotEmpty -> a
 -- head (Cons x _) = x
 
--- unsafeHead :: List a e -> a
--- unsafeHead (Cons x _) = x
--- unsafeHead Nil = error "unsafeHead: Nil"
+-- head_maybe :: List a e -> Maybe a
+-- head_maybe (Cons x _) = Just x
+-- head_maybe Nil = Nothing
+
+data HMaybe m where
+  HNothing :: HMaybe Nothing
+  HJust :: a -> HMaybe (Just a)
+
+type family IfEmpty (e :: Emptiness) a :: Maybe *
+type instance IfEmpty NotEmpty a = Just a
+type instance IfEmpty Empty a = Nothing
+
+head_maybe :: List a e -> HMaybe (IfEmpty e a)
+head_maybe (Cons x _) = HJust x
+head_maybe Nil = HNothing
+
+-- data SMaybe s m where
+--   SNothing :: SMaybe s Nothing
+--   SJust :: s a -> SMaybe s (Just a)
 
 -- E<Type> means exists a. <Type> a
 
--- data EList a where
---   EList :: List a e -> EList a
+data EList a where
+  EList :: List a e -> EList a
 
--- tail :: List a NotEmpty -> EList a
--- tail (Cons _ xs) = EList xs
+tail :: List a NotEmpty -> EList a
+tail (Cons _ xs) = EList xs
 
 -- data Nat = Zero | Succ Nat
 

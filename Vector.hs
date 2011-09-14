@@ -12,6 +12,9 @@ data Vector :: * -> Nat -> * where
   VNil  :: Vector a Zero
   VCons :: a -> Vector a n -> Vector a (Succ n)
 
+data EVector a where
+  EVector :: Vector a n -> EVector a
+
 length :: Vector a n -> N.Rep n
 length VNil = SZero
 length (VCons _ v) = SSucc (length v)
@@ -40,11 +43,10 @@ toList (VCons x xs) = x : toList xs
 --   where (xs, ys) = splitAt m zs
 -- IA0: splitAt (SSucc m) VNil = undefined  -- IA0: Pattern match(es) are non-exhaustive
 
--- IA0: What to do with filter's result type?
--- filter :: (a -> Bool) -> Vector a n -> Vector a m
--- filter p VNil = VNil
--- filter p (VCons x xs)
---   | p x = VCons x xs'
---   | otherwise = xs'
---   where xs' = filter p xs
+filter :: (a -> Bool) -> Vector a n -> EVector a
+filter _ VNil = EVector VNil
+filter p (VCons x xs)
+  | p x = case exs of EVector fxs -> EVector (VCons x fxs)
+  | otherwise = exs
+  where exs = filter p xs
 
