@@ -82,6 +82,9 @@ type instance Project (n ': ns) r = '(n, Lookup n r) ': Project ns r
 class ZeroConstraint (a :: *)
 instance ZeroConstraint a
 
+mkShowR :: RList Show r -> Record Show r
+mkShowR = R
+
 -- TESTS -------------------------------------------------------------
 
 type LName = Zero
@@ -95,9 +98,9 @@ lAge = N.SSucc N.SZero
 type Test_0 = ['(LName, String), '(LAge, Int)]
 
 test_0 :: Record Show Test_0
-test_0 = R $ RCons lName "Haskell"
-           $ RCons lAge 21
-           $ RNil
+test_0 = mkShowR $ RCons lName "Haskell"
+                 $ RCons lAge 21
+                 $ RNil
 
 test_1 :: String
 test_1 = lookup lName test_0
