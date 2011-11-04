@@ -1,0 +1,12 @@
+TYPE SIGNATURES
+TYPE CONSTRUCTORS
+  data T (k::BOX) (k0::BOX) (a::k) (b::k0)
+      RecFlag NonRecursive
+      = K :: forall (k::BOX) (k0::BOX) (a::k) (b::k0). T k k0 a b
+      FamilyInstance: none
+COERCION AXIOMS
+Dependent modules: []
+Dependent packages: [base, ghc-prim, integer-gmp]
+
+==================== Typechecker ====================
+
