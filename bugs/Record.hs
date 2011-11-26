@@ -2,6 +2,10 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE UndecidableInstances #-}
+#ifdef PROMOTION
+{-# LANGUAGE PolyKinds #-}
+#endif
+
 
 module Record where
 
