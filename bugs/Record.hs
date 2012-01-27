@@ -3,7 +3,7 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE UndecidableInstances #-}
 #ifdef PROMOTION
-{-# LANGUAGE PolyKinds #-}
+{-# LANGUAGE DataKinds #-}
 #endif
 
 

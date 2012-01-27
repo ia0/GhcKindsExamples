@@ -1,4 +1,4 @@
--- {-# LANGUAGE PolyKinds #-}
+-- {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE GADTs #-}
 
